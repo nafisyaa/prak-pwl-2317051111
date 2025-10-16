@@ -3,7 +3,7 @@
 @section('content')
 <style>
     .user-wrapper {
-        max-width: 850px;
+        max-width: 1200px;
         margin: 40px auto;
         background-color: #ffffff;
         padding: 30px;
@@ -60,15 +60,38 @@
 </style>
 
 <div class="user-wrapper">
-    {{-- Header --}}
     <div class="user-header">
         <h2 class="user-title">Daftar Pengguna</h2>
         <a href="{{ route('user.create') }}" class="user-btn">+ Tambah Pengguna</a>
     </div>
 
-    {{-- Tabel --}}
     <div class="user-table">
         @include('components.user_table', ['user' => $user])
     </div>
 </div>
+@if(session('success'))
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="successModalLabel">Berhasil!</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ session('success') }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        });
+    </script>
+@endif
+
 @endsection
