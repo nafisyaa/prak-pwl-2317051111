@@ -5,6 +5,7 @@
             <th style="padding:12px; text-align:center;">NAMA</th>
             <th style="padding:12px; text-align:center;">NPM</th>
             <th style="padding:12px; text-align:center;">KELAS</th>
+            <th style="padding:12px; text-align:center;">AKSI</th>
         </tr>
     </thead>
     <tbody>
@@ -19,7 +20,16 @@
                 <td style="padding:12px; text-align:center;">{{ $user->nama }}</td>
                 <td style="padding:12px; text-align:center;">{{ $user->nim }}</td>
                 <td style="padding:12px; text-align:center;">{{ $user->kelas->nama_kelas }}</td>
+                <td style="padding:12px; text-align:center;">
+                    <a href="{{ route('user.edit', $user->id) }}" style="text-decoration:none; color:black; background-color:#ffc107; padding:6px 10px; border-radius:4px; font-size:13px;">Edit</a>
+                    <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline-block; margin-left:4px;" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" style="background-color:#dc3545; color:white; padding:6px 10px; border:none; border-radius:4px; font-size:13px; cursor:pointer;">Hapus</button>
+                    </form>
+                </td>
             </tr>
+
         @endforeach
     </tbody>
 </table>

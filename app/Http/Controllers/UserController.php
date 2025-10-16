@@ -29,7 +29,7 @@ class UserController extends Controller
     public function create()
     {
         $kelasmodel = new Kelas();
-        $kelas = $kelasmodel->getKelas();
+        $kelas = Kelas::all(); 
         $data = [
             'title' => 'Create User',
             'kelas' => $kelas
@@ -48,4 +48,33 @@ class UserController extends Controller
 
         return redirect()->to('/user');
     }
+
+    public function edit($id){
+        $user = $this->userModel->findOrFail($id);
+        $kelas = Kelas::all();
+
+        return view('edit_user', [
+            'title' => 'Edit User',
+            'user' => $user,
+            'kelas' => $kelas
+        ]);
+    }
+
+    public function update(Request $request, $id){
+        $this->userModel->findOrFail($id)->update([
+            'nama' => $request->nama,
+            'nim' => $request->nim,
+            'kelas_id' => $request->kelas_id
+        ]);
+
+        return redirect()->to('/user')->with('success', 'Data berhasil diperbarui!');
+    }
+
+    public function destroy($id){
+        $this->userModel->findOrFail($id)->delete();
+        return redirect()->to('/user')->with('success', 'Data berhasil dihapus!');
+    }
+
+    
+
 }
